@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
-import CORS from 'cors'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css';
-import Gallery from './components/Gallery.js'
-import SearchBar from './components/SearchBar.js'
+import Gallery from './components/Gallery'
+import SearchBar from './components/SearchBar'
+import AlbumView from './components/AlbumView'
+import ArtistView from './components/ArtistView'
 
 function App(){
     let [search, setSearch] = useState('')
@@ -35,18 +37,26 @@ function App(){
     return (
       <div className='App'>
         <div>
-          <div>
-          <SearchBar handleSearch = {handleSearch} />
+          <div className='cDiv'>
+            <h3>{message}</h3>
           </div>
-          <div>
-            {message}
-          </div>
-          <div>
-            <Gallery data={data} />
+          <div className='cDiv'>
+            <Router>
+                <Routes>
+                    <Route path="/" element={
+                        <React.Fragment>
+                            <SearchBar handleSearch = {handleSearch}/>
+                            <Gallery data={data} />
+                        </React.Fragment>
+                    } />
+                    <Route path="/album/:id" element={<AlbumView />} />
+                    <Route path="/artist/:id" element={<ArtistView />} />
+                </Routes>
+            </Router>
           </div>
         </div>
       </div>
     )
 }
 
-export default App
+export default App;

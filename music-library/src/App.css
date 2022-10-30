@@ -29,6 +29,9 @@
   box-sizing: border-box;
 }
 
+.cDiv {
+  padding: 5px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
