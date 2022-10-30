@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import CORS from 'cors'
 import './App.css';
-import Gallery from './components/Gallery.js'
-import SearchBar from './components/SearchBar.js'
+import Gallery from './components/Gallery'
+import SearchBar from './components/SearchBar'
+import { DataContext } from './context/DataContext'
 
 function App(){
     let [search, setSearch] = useState('')
@@ -35,14 +35,16 @@ function App(){
     return (
       <div className='App'>
         <div>
-          <div>
+          <div className='cDiv'>
           <SearchBar handleSearch = {handleSearch} />
           </div>
-          <div>
+          <div className='cDiv'>
             {message}
           </div>
-          <div>
-            <Gallery data={data} />
+          <div className='cDiv'>
+          <DataContext.Provider value={data} >
+                <Gallery />
+            </DataContext.Provider>
           </div>
         </div>
       </div>
