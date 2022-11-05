@@ -1,22 +1,24 @@
-import { useEffect, useState } from 'react'
-import CORS from 'cors'
+import { useEffect, useState, Suspense } from 'react'
+import { createResource as fetchData } from './helper'
 import './App.css';
-import Gallery from './components/Gallery.js'
-import SearchBar from './components/SearchBar.js'
+import Gallery from './components/Gallery'
+import SearchBar from './components/SearchBar'
+import Spinner from './components/Spinner';
 
 function App(){
-    let [search, setSearch] = useState('')
+    let [searchTerm, setSearch] = useState('')
     let [message, setMessage] = useState('Search for Music!')
-    let [data, setData] = useState([])
+    let [data, setData] = useState(null)
 
-    const API_URL = 'https://itunes.apple.com/search?term='
+
+    //const API_URL = 'https://itunes.apple.com/search?term='
 
     const handleSearch = (e, term) => {
       e.preventDefault()
       setSearch(term)
     }
 
-    useEffect(() => {
+/*     useEffect(() => {
       if(search) {
         const fetchData = async () => {
             document.title = `${search} Music`
@@ -30,8 +32,25 @@ function App(){
         }
         fetchData()
       }
-    }, [search])
-
+    }, [search]) */
+    
+      const renderGallery = () => {
+        if(data){
+            return (
+                <Suspense fallback={<Spinner/>}>
+                    <Gallery data={data} />
+                </Suspense>
+            )
+        }
+    }
+  
+    useEffect(() => {
+      if (searchTerm) {
+          document.title = `${searchTerm} Music`
+          setData(fetchData(searchTerm))
+      }
+  }, [searchTerm])
+  
     return (
       <div className='App'>
         <div>
@@ -42,7 +61,7 @@ function App(){
             {message}
           </div>
           <div>
-            <Gallery data={data} />
+            {renderGallery()}
           </div>
         </div>
       </div>
