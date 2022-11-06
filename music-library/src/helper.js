@@ -42,8 +42,8 @@ const wrapPromise = (promise) => {
     }
 }
 
-export const createResource = (searchTerm) => {
+export const createResource = (searchTerm, path) => {
     return {
-        result: wrapPromise(fetchSearch(searchTerm))
+        result: wrapPromise(fetchSearch(searchTerm, path))
     }
 }

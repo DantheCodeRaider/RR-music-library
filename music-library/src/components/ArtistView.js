@@ -1,12 +1,14 @@
 // These components will be making separate API calls from the app
 // component to serve specific data about our artist
-import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import Spinner from './Spinner'
 
-function ArtistView() {
+const ArtistView = () => {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [ artistData, setArtistData ] = useState([])
-
+    
     useEffect(() => {
         const API_URL = `http://localhost:4000/album/${id}`
         const fetchData = async () => {
@@ -17,17 +19,15 @@ function ArtistView() {
         fetchData()
     }, [id])
 
-    const justAlbums = artistData.filter(entry => entry.collectionType === 'Album')
-
-    const renderAlbums = justAlbums.map((album, i) => {
+    const allAlbums = artistData.filter(entity => entity.collectionType === 'Album')
+    .map((album, i) => {
         return (
-            <div key={album.collectionId}>
+            <div key={i}>
                 <Link to={`/album/${album.collectionId}`}>
                     <p>{album.collectionName}</p>
                 </Link>
-            </div>
-        )
-    })
+            </div>)
+        })
 
     const navButtons = () => {
         return(
@@ -41,16 +41,9 @@ function ArtistView() {
 
     return (
         <div>
-            <div>
-            {artistData.length > 0 ? <h2>{artistData[0].artistName}</h2> : <h2>Loading...</h2>}
-                {navButtons()}
-                {allData}
-            </div>
-            <div>
-                <h2>The id passed was: {id}</h2>
-                <p>Artist Data Goes Here!</p>
-                {renderAlbums}
-            </div>
+            {artistData.length > 0 ? <h2>{artistData[0].artistName}</h2> : <Spinner />}
+            {navButtons()}
+            {allAlbums}
         </div>
     )
 }
