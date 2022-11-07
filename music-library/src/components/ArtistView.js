@@ -10,7 +10,7 @@ const ArtistView = () => {
     const [ artistData, setArtistData ] = useState([])
     
     useEffect(() => {
-        const API_URL = `http://localhost:4000/album/${id}`
+        const API_URL = `http://cors-anywhere.herokuapp.com/https://itunes.apple.com/lookup?id=${id}&entity=album` //https://itunes.apple.com/lookup?id= https://itunes.apple.com/lookup?id=${id}&entity=album
         const fetchData = async () => {
             const response = await fetch(API_URL)
             const resData = await response.json()

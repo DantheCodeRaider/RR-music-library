@@ -10,7 +10,7 @@ const AlbumView = () => {
     const [ albumData, setAlbumData ] = useState([])
 
     useEffect(() => {
-        const API_URL = `http://localhost:4000/song/${id}`
+        const API_URL = `http://cors-anywhere.herokuapp.com/https://itunes.apple.com/lookup?id=${id}&entity=song` //  https://itunes.apple.com/lookup?upc=${id} http://cors-anywhere.herokuapp.com/https://itunes.apple.com/lookup?upc=${id}&entity=song https://itunes.apple.com/lookup?collectionid=211192863&entity=song
         const fetchData = async () => {
             const response = await fetch(API_URL)
             const resData = await response.json()
@@ -33,7 +33,7 @@ const AlbumView = () => {
     .map((album, i) => {
         return (
             <div key={i}>
-                {album.trackName}
+                <h4>{album.trackName}</h4>
             </div>
         )
     })

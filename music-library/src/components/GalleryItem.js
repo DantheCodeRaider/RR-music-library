@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function GalleryItem(props) {
+const GalleryItem = (props) => {
     let [view, setView] = useState(false)
 
     const simpleStyle = {
@@ -65,5 +65,6 @@ function GalleryItem(props) {
     )
 
 }
+
 export default GalleryItem
 
